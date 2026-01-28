@@ -2,44 +2,61 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaginaController;
+use App\Http\Controllers\CursoController;
+use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\AlunoController;
+use App\Http\Controllers\DisciplinaController;
 
-// --- ATIVIDADES DE ROTAS SIMPLES E VIEWS ---
 
+Route::get('/empresa', [PaginaController::class, 'empresa']);
+Route::get('/servicos', [PaginaController::class, 'servicos']);
+Route::get('/portfolio', [PaginaController::class, 'portfolio']);
+Route::get('/blog', [PaginaController::class, 'blog']);
+Route::get('/equipe', [PaginaController::class, 'equipe']);
+
+// Atividade 1
 Route::get('/ola', function () {
     return 'Olá, Laravel!';
 });
 
+// Atividade 2
 Route::get('/curso/ads', function () {
     return 'Curso de Análise e Desenvolvimento de Sistemas';
 });
 
+// Atividade 3
 Route::get('/curso/web', function () {
     return 'Disciplina Programação Web I';
 });
 
-Route::view('/sobre', 'sobre'); // Atividade 4 (Depuração: garantir arquivo minúsculo)
+// Atividade 4
+Route::view('/sobre', 'sobre');
+
+// Atividade 5
 Route::view('/contato', 'contato');
+
+// Atividade 6
 Route::view('/institucional/missao', 'missao');
 
-// --- ATIVIDADES DE CONTROLLER E DEPURAÇÃO ---
-
-// Atividade 7 (Depuração): A rota específica deve vir ANTES da com parâmetro {id}
-Route::get('/produto/novo', function () {
-    return "Novo Produto";
+Route::get('/usuario/{nome}', function ($nome) {
+    return "Usuário: " . $nome;
 });
 
-Route::get('/produto/{id}', [PaginaController::class, 'produto']);
 
-// Atividades 7, 9 e 10
-Route::get('/empresa', [PaginaController::class, 'empresa']);
-Route::get('/portfolio', [PaginaController::class, 'portfolio']);
-Route::get('/equipe', [PaginaController::class, 'equipe']);
+// --- EXERCÍCIOS DE CURSOS ---
+Route::get('/cursos', [CursoController::class, 'index']);
+Route::get('/cursos/novo', [CursoController::class, 'create']);
+Route::get('/cursos/listagem', [CursoController::class, 'listagem']);
+Route::get('/cursos/{id}', [CursoController::class, 'show']);
 
-// Atividade 8 (Depuração): Corrigido para GET para funcionar no navegador
-Route::get('/servicos', [PaginaController::class, 'servicos']);
+// --- EXERCÍCIO 5  ---
+Route::get('/produtos/create', [ProdutoController::class, 'create']);
+Route::post('/produtos', [ProdutoController::class, 'store']);
 
-// Atividade 10 (Depuração): Removida a duplicidade para evitar que uma sobrescreva a outra
-Route::get('/blog', [PaginaController::class, 'blog']);
+// --- EXERCÍCIO 6  ---
+Route::resource('alunos', AlunoController::class);
 
-// Atividade 11 e 6 (Depuração)
-Route::get('/usuario/{id}', [PaginaController::class, 'usuario']);
+// --- EXERCÍCIO 7 ---
+Route::get('/disciplinas', [DisciplinaController::class, 'index']);
+Route::get('/disciplinas/create', [DisciplinaController::class, 'create']);
+Route::get('/disciplinas/{id}', [DisciplinaController::class, 'show']);
